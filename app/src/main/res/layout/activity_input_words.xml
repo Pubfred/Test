@@ -213,7 +213,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:weightSum="3"
+	    android:weightSum="3"
+	    android:baselineAligned="false"
             >
 
             <LinearLayout
@@ -222,7 +223,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:weightSum="2"
-
+                android:baselineAligned="false"
                 >
 
                 <com.breadwallet.presenter.customviews.BREdit
@@ -256,7 +257,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:weightSum="2"
-
+                android:baselineAligned="false"
                 >
 
                 <com.breadwallet.presenter.customviews.BREdit
@@ -290,7 +291,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:weightSum="2"
-
+                android:baselineAligned="false"
                 >
 
                 <com.breadwallet.presenter.customviews.BREdit
@@ -366,7 +367,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:weightSum="2"
-
+                android:baselineAligned="false"
                 >
 
                 <com.breadwallet.presenter.customviews.BREdit

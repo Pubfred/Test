@@ -66,8 +66,12 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
 };
 
 static const char *dns_seeds[] = {
-        "seednode1.zeonhexalgo.fun",
-        "seednode2.zeonhexalgo.fun"
+    "seednode1.zeonhexalgo.fun",
+    "seednode2.zeonhexalgo.fun",
+    "45.77.137.85",
+    "73.106.9.224",
+    "5.249.155.15"
+
 };
 
 #else // main net
@@ -92,7 +96,10 @@ static const struct { uint32_t height; const char *hash; uint32_t timestamp; uin
 
 static const char *dns_seeds[] = {
     "seednode1.zeonhexalgo.fun",
-    "seednode2.zeonhexalgo.fun"
+    "seednode2.zeonhexalgo.fun",
+    "45.77.137.85",
+    "73.106.9.224",
+    "5.249.155.15"
 };
 
 #endif

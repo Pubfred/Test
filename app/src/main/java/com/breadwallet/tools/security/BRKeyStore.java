@@ -668,7 +668,8 @@ public class BRKeyStore {
                 count++;
             }
 //            Assert.assertEquals(count, 11);
-            assert (count == 11);
+            //
+	    //assert (count == 11);
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

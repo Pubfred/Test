@@ -11,7 +11,7 @@ model {
             minSdkVersion.apiLevel = 26
             targetSdkVersion.apiLevel = 26
             versionCode = 3
-            versionName = "3"
+            versionName = "4"
         }
 
         productFlavors.with {
@@ -39,7 +39,7 @@ model {
         }
 
         ndk {
-            platformVersion = "26"
+            platformVersion = "23"
             // TODO: remove abiFilters once NDK fixes MIPS compile issue
             // clang crashes when building for MIPS at least since NDK 14.0.3529234 rc1
             // https://github.com/android-ndk/ndk/issues/290
@@ -69,13 +69,13 @@ model {
             quiet = false
             explainIssues = true
             // if true, stop the gradle build if errors are found
-            abortOnError = true
+            abortOnError = false
             // if true, only report errors
             ignoreWarnings = false
 
             // Warning for invalid packages 
             warning 'InvalidPackage' 
-            lintConfig file("./lintpack.xml")
+
             disable 'MissingTranslation'
         }
 
@@ -155,6 +155,5 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-        
 }
 apply plugin: 'com.google.gms.google-services'
