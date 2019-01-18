@@ -145,7 +145,7 @@ public class BRConstants {
     public static final String REDDIT_LINK = "https://www.reddit.com/r/ZEON";
     public static final String BLOG_LINK = "https://zeonhexalgo.fun";
 
-    public static final String BLOCK_EXPLORER_BASE_URL = BuildConfig.BITCOIN_TESTNET ? "https://explorer.zeonhexalgo.fun" :"https://explorer.zeonhexalgo.fun";
+    public static final String BLOCK_EXPLORER_BASE_URL = BuildConfig.BITCOIN_TESTNET ? "https://explorer.zeonhexalgo.fun/" :"https://explorer.zeonhexalgo.fun/";
 
     private BRConstants() {
     }

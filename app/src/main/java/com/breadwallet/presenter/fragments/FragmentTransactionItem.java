@@ -195,7 +195,7 @@ public class FragmentTransactionItem extends Fragment {
         mTxHashLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txUrl = BRConstants.BLOCK_EXPLORER_BASE_URL + item.getTxHashHexReversed();
+                String txUrl = BRConstants.BLOCK_EXPLORER_BASE_URL + "tx/" + item.getTxHashHexReversed();
                 Log.d(TAG, "txUrl = " + txUrl);
                 Utils.openUrl(FragmentTransactionItem.this.getContext(), txUrl);
             }

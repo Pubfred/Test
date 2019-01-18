@@ -8,9 +8,9 @@ model {
         defaultConfig {
             testInstrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
             applicationId = 'org.ZEON'
-            minSdkVersion.apiLevel = 26
+            minSdkVersion.apiLevel = 23
             targetSdkVersion.apiLevel = 26
-            versionCode = 3
+            versionCode = 4
             versionName = "4"
         }
 
@@ -74,7 +74,7 @@ model {
             ignoreWarnings = false
 
             // Warning for invalid packages 
-            warning 'InvalidPackage' 
+          //  warning 'InvalidPackage' 
 
             disable 'MissingTranslation'
         }
