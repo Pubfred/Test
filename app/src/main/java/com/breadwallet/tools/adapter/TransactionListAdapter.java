@@ -213,15 +213,22 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         boolean received = item.getSent() == 0;
+
+        
+        
         convertView.arrowIcon.setImageResource(received ? R.drawable.arrow_down_bold_circle : R.drawable.arrow_up_bold_circle);
         convertView.mainLayout.setBackgroundResource(getResourceByPos(position));
         convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
         convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
-        final String addr = item.getTo()[0];
+        
+        
+    
+	final String addr = item.getTo()[0];
         convertView.account.setText(addr);
         int blockHeight = item.getBlockHeight();
         int confirms = blockHeight == Integer.MAX_VALUE ? 0 : BRSharedPrefs.getLastBlockHeight(mContext) - blockHeight + 1;
         int relayCount = BRPeerManager.getRelayCount(item.getTxHash());
+
 
         int level = 0;
         if (confirms <= 0) {
@@ -286,8 +293,11 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             convertView.status.setText(String.format("%s - %s", sentReceived, percentage));
         }
 
-        if (!item.isValid())
-            convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
+        if (!item.isValid()) { 
+
+        convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
+             
+        }
 
         long satoshisAmount = received ? item.getReceived() : (item.getSent() - item.getReceived());
 

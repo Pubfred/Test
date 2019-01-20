@@ -34,10 +34,11 @@
 extern "C" {
 #endif
 
-#define TX_FEE_PER_KB        5000ULL     // standard tx fee per kb of tx size, rounded up to nearest kb
+#define TX_FEE_PER_KB        4200ULL     // standard tx fee per kb of tx size, rounded up to nearest kb
 #define TX_OUTPUT_SIZE       34          // estimated size for a typical transaction output
 #define TX_INPUT_SIZE        148         // estimated size for a typical compact pubkey transaction input
-#define TX_MIN_OUTPUT_AMOUNT (TX_FEE_PER_KB*3*(TX_OUTPUT_SIZE + TX_INPUT_SIZE)/1000) //no txout can be below this amount
+#define TX_MIN_OUTPUT_AMOUNT (4200ULL *3 *( 34 + 148 )/1000) //no txout can be below this amount
+	                                 // (TX_FEE_PER_KB*3*(TX_OUTPUT_SIZE + TX_INPUT_SIZE)/1000)
 #define TX_MAX_SIZE          100000      // no tx can be larger than this size in bytes
 #define TX_FREE_MAX_SIZE     1000        // tx must not be larger than this size in bytes without a fee
 #define TX_FREE_MIN_PRIORITY 57600000ULL // tx must not have a priority below this value without a fee
@@ -47,7 +48,7 @@ extern "C" {
 #define TXIN_SEQUENCE        UINT32_MAX  // sequence number for a finalized tx input
 
 #define SATOSHIS             100000000LL
-#define MAX_MONEY            (84000000LL*SATOSHIS)
+#define MAX_MONEY            (84000000LL * SATOSHIS)
 
 #define BR_RAND_MAX          ((RAND_MAX > 0x7fffffff) ? 0x7fffffff : RAND_MAX)
 

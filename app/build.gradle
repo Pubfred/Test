@@ -10,7 +10,7 @@ model {
             applicationId = 'org.ZEON'
             minSdkVersion.apiLevel = 23
             targetSdkVersion.apiLevel = 26
-            versionCode = 4
+            versionCode = 15
             versionName = "4"
         }
 
