@@ -77,7 +77,7 @@ public class BRConstants {
     /**
      * BRWalletManager
      */
-    public static final long TX_FEE_PER_KB = 4200;
+    public static final long TX_FEE_PER_KB = 12000 ;
     public static final long DEFAULT_FEE_PER_KB = (TX_FEE_PER_KB * 1000 + 190) / 191;
     public static final long MAX_FEE_PER_KB = (100100 * 1000 + 190) / 191;
 
@@ -113,7 +113,7 @@ public class BRConstants {
 
     public static final long PASS_CODE_TIME_LIMIT = TimeUnit.MILLISECONDS.convert(6, TimeUnit.DAYS);
 
-    public static boolean PLATFORM_ON = true;
+    public static boolean PLATFORM_ON = false;
     public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
 
