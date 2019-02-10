@@ -2141,7 +2141,7 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
         if (i > 0) {
             UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
             manager->lastBlock = BRSetGet(manager->blocks, &hash);
-        }
+       
     
      if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
             for (size_t i = array_count(manager->peers); i > 0; i--) {
@@ -2151,6 +2151,7 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
             BRPeerDisconnect(manager->downloadPeer);
         }
 
+    }            
     manager->syncStartHeight = manager->lastBlock->height;     
     pthread_mutex_unlock(&manager->lock);
     BRPeerManagerConnect(manager);
