@@ -671,7 +671,31 @@ public class BRWalletManager {
     }
     
     
-    
+     /**
+     * Trigger the appropriate rescan and save the name and time to BRSharedPrefs
+     *
+     * @param app  android context to use
+     * @param mode the RescanMode to be used
+     */
+    private void rescan(Context app, RescanMode mode) {
+        if (RescanMode.FROM_BLOCK == mode) {
+            long lastSentTransactionBlockheight = BRSharedPrefs.getLastSendTransactionBlockheight(app, getIso());
+            Log.d(TAG, "rescan -> with last block: " + lastSentTransactionBlockheight);
+            getPeerManager().rescanFromBlock(lastSentTransactionBlockheight);
+        } else if (RescanMode.FROM_CHECKPOINT == mode) {
+            Log.e(TAG, "rescan -> from checkpoint");
+            getPeerManager().rescanFromCheckPoint();
+        } else if (RescanMode.FULL == mode) {
+            Log.e(TAG, "rescan -> full");
+            getPeerManager().rescan();
+        } else {
+            throw new IllegalArgumentException("RescanMode is invalid, mode -> " + mode);
+        }
+        long now = System.currentTimeMillis();
+        BRSharedPrefs.putLastRescanModeUsed(app, getIso(), mode.name());
+        BRSharedPrefs.putLastRescanTime(app, getIso(), now);
+    }
+
     
     private native byte[] encodeSeed(byte[] seed, String[] wordList);
 
