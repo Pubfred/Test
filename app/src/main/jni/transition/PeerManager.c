@@ -31,7 +31,7 @@
 #include "BRWallet.h"
 #include "wallet.h"
 #include <pthread.h>
-#include <BRBase58.h>
+#include "BRBase58.h"
 #include <stdio.h>
 #include <assert.h>
 #include <unistd.h>

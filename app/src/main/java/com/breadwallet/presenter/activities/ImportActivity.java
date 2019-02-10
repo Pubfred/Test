@@ -20,7 +20,7 @@ public class ImportActivity extends BRActivity {
     private Button scan;
     private static final String TAG = ImportActivity.class.getName();
     public static boolean appVisible = false;
-    private static ImportActivity app;
+    private static  ImportActivity app;
     private ImageButton close;
 
     public static ImportActivity getApp() {

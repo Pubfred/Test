@@ -4,7 +4,7 @@
 
 #include <jni.h>
 #include <stdint.h>
-#include <BRBase58.h>
+#include "BRBase58.h"
 #include "JNIBase58.h"
 
 JNIEXPORT jstring JNICALL Java_com_jniwrappers_BRBase58_base58Encode(

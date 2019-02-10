@@ -145,7 +145,7 @@
   <!-- Fee Selector economly fee description -->
   <string name="FeeSelector.economyLabel">Estimativa de entrega: mais de 60 minutos</string>
   <!-- Warning message for economy fee -->
-  <string name="FeeSelector.economyWaring">Esta opção não se recomenda para transações delicadas a nível de tempo.</string>
+  <string name="FeeSelector.economyWaring">EEsta opção não é recomendada para transações sensíveis ao tempo.</string>
   <!-- Regular fee -->
   <string name="FeeSelector.regular">Normal.</string>
   <!-- Fee Selector regular fee description -->

@@ -3,8 +3,8 @@
 //
 
 #include <jni.h>
-#include <BRKey.h>
-#include <BRBIP32Sequence.h>
+#include "BRKey.h"
+#include "BRBIP32Sequence.h"
 #include "JNIBIP32Sequence.h"
 
 JNIEXPORT jbyteArray JNICALL Java_com_jniwrappers_BRBIP32Sequence_bip32BitIDKey(JNIEnv *env, jobject thiz,

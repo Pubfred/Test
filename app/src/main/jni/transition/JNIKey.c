@@ -3,11 +3,11 @@
 //
 
 #include <jni.h>
-#include <BRInt.h>
-#include <BRKey.h>
+#include "BRInt.h"
+#include "BRKey.h"
 #include <android/log.h>
-#include <BRCrypto.h>
-#include <BRAddress.h>
+#include "BRCrypto.h"
+#include "BRAddress.h"
 #include <assert.h>
 #include "JNIKey.h"
 

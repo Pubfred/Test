@@ -180,7 +180,7 @@ public class APIClient {
             e.printStackTrace();
 
         }
-        return 0;
+        return 12000;
     }
 
     //only for testing

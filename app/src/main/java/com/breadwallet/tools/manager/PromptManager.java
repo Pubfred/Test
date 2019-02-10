@@ -138,19 +138,27 @@ public class PromptManager {
                     }
                 });
             case RECOMMEND_RESCAN:
-                return new PromptInfo("Transaction Rejected", "Your wallet may be out of sync. This can often be fixed by rescanning the blockchain.", new View.OnClickListener() {
+               return new PromptInfo("Transaction Rescan" , "Wallet may be out of sync.", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+		    
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                BRSharedPrefs.putStartHeight(app, 0);
-                                BRPeerManager.getInstance().rescan();
+				BRSharedPrefs.putStartHeight(app, 140000  );
+                               // BRPeerManager.getCurrentBlockHeight() - 100  );    
+			        BRPeerManager.getInstance().startSyncingProgressThread(); 
+                              //  BRPeerManager.getInstance().startSyncingProgressThread();
                                 BRSharedPrefs.putScanRecommended(app, false);
                             }
                         }).start();
                     }
-                });
+                });  
+              
+
+
+                
+
             case SHARE_DATA:
                 /*return new PromptInfo("Share Anonymous Data", "Help improve ZEON by sharing your anonymous data with us", new View.OnClickListener() {
                     @Override

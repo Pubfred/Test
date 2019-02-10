@@ -176,8 +176,12 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void setTexts(final TxHolder convertView, int position) {
 
+           
         TxItem item = itemFeed.get(currPromptItem == null ? position : position - 1);
-        if (Utils.isNullOrEmpty(tempAuthKey)) {
+       
+        
+
+	if (Utils.isNullOrEmpty(tempAuthKey)) {
             tempAuthKey = BRKeyStore.getAuthKey(mContext);
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -188,6 +192,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
             }, 10000);
         }
+
         TxMetaData txMetaData = KVStoreManager.getInstance().getTxMetaData(mContext, item.getTxHash(), tempAuthKey);
         String commentString = (txMetaData == null || txMetaData.comment == null) ? "" : txMetaData.comment;
         convertView.comment.setText(commentString);
@@ -218,14 +223,21 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         
         convertView.arrowIcon.setImageResource(received ? R.drawable.arrow_down_bold_circle : R.drawable.arrow_up_bold_circle);
         convertView.mainLayout.setBackgroundResource(getResourceByPos(position));
-        convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
-        convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
+
+//	if (item.isValid())
+        //convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
+
+//        if (item.isValid())
+         // convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
         
         
     
 	final String addr = item.getTo()[0];
-        convertView.account.setText(addr);
-        int blockHeight = item.getBlockHeight();
+
+//	if (item.isValid())
+        //convertView.account.setText(addr);
+
+	int blockHeight = item.getBlockHeight();
         int confirms = blockHeight == Integer.MAX_VALUE ? 0 : BRSharedPrefs.getLastBlockHeight(mContext) - blockHeight + 1;
         int relayCount = BRPeerManager.getRelayCount(item.getTxHash());
 
@@ -260,11 +272,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 break;
             case 2:
                 percentage = "40%";
-                availableForSpend = true;
                 break;
             case 3:
                 percentage = "60%";
-                availableForSpend = true;
+		availableForSpend = true;
                 break;
             case 4:
                 percentage = "80%";
@@ -288,30 +299,62 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             set.applyTo(convertView.constraintLayout);
         }
         if (level == 6) {
+	    	
             convertView.status.setText(mContext.getString(R.string.Transaction_complete));
+            // BRPeerManager.getInstance().syncStarted() ;   
+            //convertView.status.setText(String.format("To be deleted"));		    
+            //convertView.constraintLayout.removeView(convertView.status);
         } else {
-            convertView.status.setText(String.format("%s - %s", sentReceived, percentage));
+          		
+	  if ( level < 3  )
+          convertView.status.setText(String.format(""));
+	  if (level > 2 )
+          convertView.status.setText(String.format("%s - %s",sentReceived, percentage));
+	  if (level == 4 )
+	  BRPeerManager.getInstance().txStatusUpdate();
+
+
         }
 
-        if (!item.isValid()) { 
+         
+            
+        convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
+//        
+        convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
 
-        convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
+        
+        convertView.account.setText(addr);
+
+
+        // convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
              
-        }
+        // if (!item.isValid())
+        //        {
+          //       convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
+               // PeerManager.getInstance().txStatusUpdate() ;
+        // }
+
 
         long satoshisAmount = received ? item.getReceived() : (item.getSent() - item.getReceived());
 
         boolean isBTCPreferred = BRSharedPrefs.getPreferredBTC(mContext);
         String iso = isBTCPreferred ? "ZEON" : BRSharedPrefs.getIso(mContext);
+
+//	if (item.isValid())
+  
+  
         convertView.amount.setText(BRCurrency.getFormattedCurrencyString(mContext, iso, BRExchange.getAmountFromSatoshis(mContext, iso, new BigDecimal(satoshisAmount))));
 
         //if it's 0 we use the current time.
         long timeStamp = item.getTimeStamp() == 0 ? System.currentTimeMillis() : item.getTimeStamp() * 1000;
         CharSequence timeSpan = BRDateUtil.getCustomSpan(new Date(timeStamp));
 
+//	if (item.isValid())
         convertView.timestamp.setText(timeSpan);
 
-    }
+    
+}
+
 
     private void setPrompt(final PromptHolder prompt) {
 

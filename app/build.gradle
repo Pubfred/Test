@@ -13,8 +13,8 @@ model {
             applicationId = 'org.ZEON'
             minSdkVersion.apiLevel = 23
             targetSdkVersion.apiLevel = 26
-            versionCode = 29
-            versionName = "Beta"
+            versionCode = 56
+            versionName = "Beta2"
         }
 
         productFlavors.with {
@@ -42,7 +42,7 @@ model {
         }
 
         ndk {
-            platformVersion = "23"
+            platformVersion = "26"
             // TODO: remove abiFilters once NDK fixes MIPS compile issue
             // clang crashes when building for MIPS at least since NDK 14.0.3529234 rc1
             // https://github.com/android-ndk/ndk/issues/290
@@ -76,9 +76,9 @@ model {
             // if true, only report errors
             ignoreWarnings = false
 
-            disable 'InvalidPackage'
-            // Warning for invalid packages 
-          //  warning 'InvalidPackage' 
+          //  disable 'InvalidPackage'
+              //Warning for invalid packages 
+            warning 'InvalidPackage' 
 
             disable 'MissingTranslation'
         }

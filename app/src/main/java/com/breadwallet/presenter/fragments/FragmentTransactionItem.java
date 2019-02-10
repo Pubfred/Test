@@ -154,7 +154,8 @@ public class FragmentTransactionItem extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fillTexts();
+    //    if (item.isValid())
+	fillTexts();
 
     }
 
@@ -262,8 +263,8 @@ public class FragmentTransactionItem extends Fragment {
             mConfirmationText.setText(String.format("%s", percentage));
         }
 
-        if (!item.isValid())
-            mConfirmationText.setText(getString(R.string.Transaction_invalid));
+      //if (!item.isValid())
+        //  mConfirmationText.setText(getString(R.string.Transaction_invalid));
 
         mToFromBottom.setText(sent ? getString(R.string.TransactionDirection_to) : getString(R.string.TransactionDirection_address));
         mDateText.setText(getFormattedDate(item.getTimeStamp()));
@@ -316,7 +317,8 @@ public class FragmentTransactionItem extends Fragment {
     }
 
     public void setItem(TxItem item) {
-        this.item = item;
+         //if (item.isValid())
+	    this.item = item;
 
     }
 

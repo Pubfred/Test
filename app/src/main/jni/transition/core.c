@@ -27,8 +27,8 @@
 #include "wallet.h"
 #include <stdio.h>
 #include <android/log.h>
-#include <BRPaymentProtocol.h>
-#include <BRBIP39Mnemonic.h>
+#include "BRPaymentProtocol.h"
+#include "BRBIP39Mnemonic.h"
 #include "BRPaymentProtocol.h"
 
 //
@@ -76,8 +76,8 @@ Java_com_breadwallet_tools_security_BitcoinUrlHandler_parsePaymentRequest(JNIEnv
                                                                      (*env)->FindClass(env,
                                                                                        "java/lang/String"),
                                                                      (*env)->NewStringUTF(env, ""));
-
-    for (size_t i = 0; i < outputsCount; i++) {
+    size_t i ;
+    for ( i = 0; i < outputsCount; i++) {
         BRTxOutput *op = &nativeRequest->details->outputs[i];
 
         (*env)->SetObjectArrayElement(env, stringArray, i, (*env)->NewStringUTF(env, op->address));

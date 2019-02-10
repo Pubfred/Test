@@ -28,9 +28,9 @@
 #include "BRBIP39Mnemonic.h"
 #include "BRBase58.h"
 #include <assert.h>
-#include <BRBIP38Key.h>
-#include <BRInt.h>
-#include <BRTransaction.h>
+#include "BRBIP38Key.h"
+#include "BRInt.h"
+#include "BRTransaction.h"
 
 static JavaVM *_jvmW;
 BRWallet *_wallet;

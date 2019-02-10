@@ -236,6 +236,7 @@ public class TxManager {
                         TxMetaData temp = kvM.getTxMetaData(app, item.getTxHash());
                         String comment = temp == null ? "" : temp.comment;
 
+		 
                         TxMetaData tx = new TxMetaData();
                         tx.exchangeCurrency = iso;
                         tx.exchangeRate = rate;
@@ -245,8 +246,10 @@ public class TxManager {
                         tx.deviceId = BRSharedPrefs.getDeviceId(app);
                         tx.txSize = item.getTxSize();
                         tx.comment = comment == null ? "" : comment;
-//                        tx.classVersion = ...
+//                       tx.classVersion = ...
                         kvM.putTxMetaData(app, tx, item.getTxHash());
+			
+
                     }
                 }
                 isMetaDataUpdating = false;

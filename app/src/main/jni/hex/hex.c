@@ -20,6 +20,9 @@
 #include "sph_whirlpool.h"
 #include "sph_sha2.h"
 
+#define _DEFAULT_SOURCE
+#define _BSD_SOURCE
+#define __USE_BSD
 
 #ifdef _MSC_VER
 # define _ALIGN(x) __declspec(align(x))
