@@ -2053,6 +2053,8 @@ size_t BRPeerManagerRelayCount(BRPeerManager *manager, UInt256 txHash)
     return count;
 }
 
+/*
+
 // rescans blocks and transactions from after the blockNumber.  If blockNumber is not known, then
 // rescan from the just prior checkpoint.
 void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNumber)
@@ -2081,7 +2083,9 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
     if (needConnect) BRPeerManagerConnect(manager);
 }
 
+*/
 
+/*
 void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
 {
     assert(manager != NULL);
@@ -2099,7 +2103,7 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
     if (needConnect) BRPeerManagerConnect(manager);
 }
 
-
+*/
 
 
 
