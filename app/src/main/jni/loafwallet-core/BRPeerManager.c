@@ -101,7 +101,7 @@ static const char *dns_seeds[] = {
 // difficulty transition boundaries in order to verify the block difficulty at the immediately following transition
 static const struct { uint32_t height; const char *hash; uint32_t timestamp; uint32_t target; } checkpoint_array[] = {
       { 0,    "00000c9c83e5970601b5af203855c305a7e426deb667e6a8b3d1e1f66b52d220", 1539864813, 0x1e0ffff0 }  ,
-      {50000, "0000000012eafd213b9d5d49e1238c89ca9948012ba9f94453d631592a8f703f", 1543041444, 0x1c166ce9 }  // 1543037844 !!!!
+      {50000, "0000000012eafd213b9d5d49e1238c89ca9948012ba9f94453d631592a8f703f", 1543037844, 0x1c166ce9 }  //  1543041444!!!!
       /*  {300,   "0xf21218cf0f39cbf23113fe7962860b08292b2c59d6f577b85af5a8280e487289", 1524732325, 0x1e0ffff0},
         {600,   "0x6cb9d69493db2deac182c8dcd56fd01a44f5e775365f09bd973a427cf729d491", 1524767448, 0x1e0ffff0},
         {900,   "0x415b1c86d6fef15af7a51dbb5aca8e204ac60454480c1d53b1d14eb034cef0a7", 1524778552, 0x1e0ffff0},
