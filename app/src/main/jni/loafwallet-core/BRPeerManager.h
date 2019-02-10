@@ -85,6 +85,10 @@ void BRPeerManagerRescan(BRPeerManager *manager);
 // rescan from the just prior checkpoint (uses a new random download peer, see above comment).
 void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNumber);  
   
+
+// rescans blocks and transactions after the last hardcoded checkpoint (uses a new random download peer, see above comment)
+void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager);  
+  
   
 // the (unverified) best block height reported by connected peers
 uint32_t BRPeerManagerEstimatedBlockHeight(BRPeerManager *manager);
