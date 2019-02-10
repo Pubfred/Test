@@ -250,10 +250,32 @@ JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_rescan(JNIEnv *
     if (!_peerManager)
         __android_log_print(ANDROID_LOG_ERROR, "Message from C: ",
                             "rescan: peerManager is NULL!!!!!!!");
-//    __android_log_print(ANDROID_LOG_ERROR, "Message from C: ", "is Connected: %d",
-//                        BRPeerManagerIsConnected(_peerManager));
+
     if (_peerManager) BRPeerManagerRescan(_peerManager);
 }
+
+/*
+ * Class:     com_breadwallet_core_BRPeerManager
+ * Method:    rescanFromBlock
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromBlock(JNIEnv *env, jobject thisObject, jlong blockNumber) {
+    BRPeerManager *peerManager = (BRPeerManager *) getJNIReference(env, thisObject);
+    BRPeerManagerRescanFromBlockNumber(peerManager, blockNumber);
+}
+
+
+/*
+ * Class:     com_breadwallet_core_BRPeerManager
+ * Method:    rescanFromCheckPoint
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromCheckPoint(JNIEnv *env, jobject thisObject) {
+    BRPeerManager *peerManager = (BRPeerManager *) getJNIReference(env, thisObject);
+    BRPeerManagerRescanFromLastHardcodedCheckpoint(peerManager);
+}
+
+
 
 JNIEXPORT void JNICALL
 Java_com_breadwallet_wallet_BRPeerManager_create(JNIEnv *env, jobject thiz,
