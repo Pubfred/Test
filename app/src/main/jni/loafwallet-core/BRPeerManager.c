@@ -2152,7 +2152,7 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
         }
 
     manager->syncStartHeight = manager->lastBlock->height;     
-    ptread_mutex_unlock(&manager->lock);
+    pthread_mutex_unlock(&manager->lock);
     BRPeerManagerConnect(manager);
          
  }
