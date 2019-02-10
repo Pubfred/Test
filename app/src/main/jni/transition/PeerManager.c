@@ -261,7 +261,7 @@ JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_rescan(JNIEnv *
  */
 JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromBlock(JNIEnv *env, jobject thisObject, jlong blockNumber) {
     if (_peerManager)
-    BRPeerManagerRescanFromBlockNumber(peerManager, blockNumber);
+    BRPeerManagerRescanFromBlockNumber(_peerManager, blockNumber);
 }
 
 
