@@ -99,7 +99,11 @@ public class BRWalletManager {
     private static final int BLACK = 0xFF000000;
     public List<OnBalanceChanged> balanceListeners;
 
-
+    public enum RescanMode {
+        FROM_BLOCK, FROM_CHECKPOINT, FULL
+    }
+    
+    
     public void setBalance(Context context, long balance) {
         if (context == null) {
             Log.e(TAG, "setBalance: FAILED TO SET THE BALANCE");
@@ -628,6 +632,47 @@ public class BRWalletManager {
 
     }
 
+    /**
+     * The rescan now operates in 3 modes (Stage 1: Incremental rescan):
+     * <p>
+     * 1)The latest block in which a send transaction originating from the user's wallet was confirmed.
+     * If there are no sends, only the following two starting points will be used.
+     * 2)The latest block checkpoint that is hardcoded in the app.
+     * 3)500 blocks before the the block height at which the wallet was created (from KV store),
+     * or the first block after the introduction of BIP39 if there is no date stored in the KV store.
+     *
+     * @param app
+     */
+    @Override
+    public void rescan(Context app) {
+        //the last time the app has done a rescan (not a regular scan)
+        long lastRescanTime = BRSharedPrefs.getLastRescanTime(app, getIso());
+        long now = System.currentTimeMillis();
+        //the last rescan mode that was used for rescan
+        String lastRescanModeUsedValue = BRSharedPrefs.getLastRescanModeUsed(app, getIso());
+        //the last successful send transaction's blockheight (if there is one, 0 otherwise)
+        long lastSentTransactionBlockheight = BRSharedPrefs.getLastSendTransactionBlockheight(app, getIso());
+        //was the rescan used within the last 24 hours
+        boolean wasLastRescanWithin24h = now - lastRescanTime <= DateUtils.DAY_IN_MILLIS;
+
+        if (wasLastRescanWithin24h) {
+            if (isModeSame(RescanMode.FROM_BLOCK, lastRescanModeUsedValue)) {
+                rescan(app, RescanMode.FROM_CHECKPOINT);
+            } else if (isModeSame(RescanMode.FROM_CHECKPOINT, lastRescanModeUsedValue)) {
+                rescan(app, RescanMode.FULL);
+            }
+        } else {
+            if (lastSentTransactionBlockheight > 0) {
+                rescan(app, RescanMode.FROM_BLOCK);
+            } else {
+                rescan(app, RescanMode.FROM_CHECKPOINT);
+            }
+        }
+    }
+    
+    
+    
+    
     private native byte[] encodeSeed(byte[] seed, String[] wordList);
 
     public native void createWallet(int transactionCount, byte[] pubkey);
