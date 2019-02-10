@@ -197,7 +197,7 @@ public class CurrencyFetchManager {
 
 
     public static JSONObject getJSonArray(Activity activity) {
-        String jsonString = callURL(activity, "https://xapi.finexbox.com/v1/ticker?market=zeon_btc");
+        String jsonString = callURL(activity, "https://api.coingecko.com/api/v3/simple/price?ids=zeon-2&vs_currencies=btc,EUR");
         JSONObject jsonArray = null;
         if (jsonString == null) return null;
         try {
@@ -208,7 +208,7 @@ public class CurrencyFetchManager {
     }
 
     public static JSONObject getBackUpJSonArray(Activity activity) {
-        String jsonString = callURL(activity, "https://xapi.finexbox.com/v1/ticker?market=zeon_btc");
+        String jsonString = callURL(activity, "https://api.coingecko.com/api/v3/coins/zeon-2");
 
         JSONObject jsonArray = null;
         if (jsonString == null) return null;
