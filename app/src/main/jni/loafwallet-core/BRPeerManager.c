@@ -2130,25 +2130,36 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
 }
 
 
-/*
+
 void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
 {
     assert(manager != NULL);
     pthread_mutex_lock(&manager->lock);
-
-    int needConnect = 0;
+   
     if (manager->isConnected) {
-        size_t i = manager->params->checkpointsCount;
+        size_t i = CHECKPOINT_COUNT;
         if (i > 0) {
             UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
-            needConnect =  BRPeerManagerRescan(manager, BRSetGet (manager->blocks, &hash));
+            manager->lastBlock = BRSetGet(manager->blocks, &hash);
         }
-    }
-    pthread_mutex_unlock(&manager->lock);
-    if (needConnect) BRPeerManagerConnect(manager);
+    
+     if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
+            for (size_t i = array_count(manager->peers); i > 0; i--) {
+                if (BRPeerEq(&manager->peers[i - 1], manager->downloadPeer)) array_rm(manager->peers, i - 1);
+            }
+
+            BRPeerDisconnect(manager->downloadPeer);
+        }
+
+    manager->syncStartHeight = manager->lastBlock->height;     
+    ptread_mutex_unlock(&manager->lock);
+    BRPeerManagerConnect(manager);
+         
+ }
+ else pthread_mutex_unlock(&manager->lock);
 }
 
-*/
+
 
 
 
