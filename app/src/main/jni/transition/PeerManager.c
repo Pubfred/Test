@@ -519,6 +519,23 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
 }
 
 
+void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
+{
+    assert(manager != NULL);
+    pthread_mutex_lock(&manager->lock);
+
+    int needConnect = 0;
+    if (manager->isConnected) {
+        size_t i = manager->params->checkpointsCount;
+        if (i > 0) {
+            UInt256 hash = UInt256Reverse(manager->params->checkpoints[i - 1].hash);
+            needConnect = _BRPeerManagerRescan(manager, BRSetGet (manager->blocks, &hash));
+        }
+    }
+    pthread_mutex_unlock(&manager->lock);
+    if (needConnect) BRPeerManagerConnect(manager);
+}
+
 
 
 JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_peerManagerFreeEverything(
