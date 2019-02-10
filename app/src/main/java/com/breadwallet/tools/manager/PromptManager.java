@@ -145,9 +145,9 @@ public class PromptManager {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-				 BRSharedPrefs.putStartHeight(SyncBlockchainActivity.this, 0);
-                                 BRPeerManager.getInstance().rescan();
-                                 BRAnimator.startBreadActivity(SyncBlockchainActivity.this, false);
+				BRSharedPrefs.putStartHeight(app, 0);
+                                BRPeerManager.getInstance().rescan();
+                                BRSharedPrefs.putScanRecommended(app, false);
                             }
                         }).start();
                     }
