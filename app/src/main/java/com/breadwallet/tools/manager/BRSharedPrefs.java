@@ -204,6 +204,8 @@ public class BRSharedPrefs {
         editor.apply();
     }
 
+    
+    /*
     public static String getLastRescanModeUsed(Context activity, String iso) {
         SharedPreferences prefs = activity.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return prefs.getString("lastRescanModeUsed_" + iso.toUpperCase(), null);
@@ -216,7 +218,9 @@ public class BRSharedPrefs {
         editor.apply();
     }
     
+   */
     
+   
     public static List<Integer> getBitIdNonces(Context activity, String key) {
         SharedPreferences prefs = activity.getSharedPreferences(BRConstants.PREFS_NAME, Context.MODE_PRIVATE);
         String result = prefs.getString(key, null);
