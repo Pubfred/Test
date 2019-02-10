@@ -2021,6 +2021,22 @@ size_t BRPeerManagerRelayCount(BRPeerManager *manager, UInt256 txHash)
     return count;
 }
 
+static int _BRPeerManagerRescan (BRPeerManager *manager, BRMerkleBlock *newLastBlock) {
+    if (NULL == newLastBlock) return 0;
+
+    manager->lastBlock = newLastBlock;
+
+    if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
+        for (size_t i = array_count(manager->peers); i > 0; i--) {
+            if (BRPeerEq(&manager->peers[i - 1], manager->downloadPeer)) array_rm(manager->peers, i - 1);
+        }
+
+        BRPeerDisconnect(manager->downloadPeer);
+    }
+
+    manager->syncStartHeight = 0; // a syncStartHeight of 0 indicates that syncing hasn't started yet
+    return 1;
+}
 
 
 // rescans blocks and transactions after earliestKeyTime (a new random download peer is also selected due to the
@@ -2106,22 +2122,6 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
     if (needConnect) BRPeerManagerConnect(manager);
 }
 
-static int _BRPeerManagerRescan (BRPeerManager *manager, BRMerkleBlock *newLastBlock) {
-    if (NULL == newLastBlock) return 0;
-
-    manager->lastBlock = newLastBlock;
-
-    if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
-        for (size_t i = array_count(manager->peers); i > 0; i--) {
-            if (BRPeerEq(&manager->peers[i - 1], manager->downloadPeer)) array_rm(manager->peers, i - 1);
-        }
-
-        BRPeerDisconnect(manager->downloadPeer);
-    }
-
-    manager->syncStartHeight = 0; // a syncStartHeight of 0 indicates that syncing hasn't started yet
-    return 1;
-}
 
 /*
 void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
