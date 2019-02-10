@@ -109,6 +109,20 @@ size_t BRPeerManagerRelayCount(BRPeerManager *manager, UInt256 txHash);
 
 // frees memory allocated for manager (call BRPeerManagerDisconnect() first if connected)
 void BRPeerManagerFree(BRPeerManager *manager);
+  
+  
+// rescans blocks and transactions after earliestKeyTime (a new random download peer is also selected due to the
+// possibility that a malicious node might lie by omitting transactions that match the bloom filter)
+void BRPeerManagerRescan(BRPeerManager *manager);
+
+// rescans blocks and transactions after the last hardcoded checkpoint (uses a new random download peer, see above comment)
+void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager);
+
+// rescans blocks and transactions from after the blockNumber.  If blockNumber is not known, then
+// rescan from the just prior checkpoint (uses a new random download peer, see above comment).
+void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNumber);
+
+    
 
 #ifdef __cplusplus
 }
