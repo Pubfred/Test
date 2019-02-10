@@ -697,6 +697,29 @@ public class BRWalletManager {
     }
 
     
+     /**
+     * @param mode       the RescanMode enum to compare to
+     * @param stringMode the stored enum value
+     * @return true if the same mode
+     */
+    private boolean isModeSame(RescanMode mode, String stringMode) {
+        if (stringMode == null) {
+            //prevent NPE
+            stringMode = "";
+        }
+        try {
+            if (mode == RescanMode.valueOf(stringMode)) {
+                return true;
+            }
+        } catch (IllegalArgumentException ex) {
+            //do nothing, illegal argument
+        }
+        return false;
+
+    }
+    
+    
+    
     private native byte[] encodeSeed(byte[] seed, String[] wordList);
 
     public native void createWallet(int transactionCount, byte[] pubkey);
