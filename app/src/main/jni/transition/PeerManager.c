@@ -254,7 +254,7 @@ JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_rescan(JNIEnv *
     if (_peerManager) BRPeerManagerRescan(_peerManager);
 }
 
-/*
+
  * Class:     com_breadwallet_core_BRPeerManager
  * Method:    rescanFromBlock
  * Signature: (J)V
@@ -264,7 +264,7 @@ JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromBlock(J
     BRPeerManagerRescanFromBlockNumber(peerManager, blockNumber);
 }
 
-*/
+
 
 
 /*
