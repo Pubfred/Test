@@ -1630,7 +1630,7 @@ BRPeerManager *BRPeerManagerNew(BRWallet *wallet, uint32_t earliestKeyTime, BRMe
     assert(peers != NULL || peersCount == 0);
     manager->wallet = wallet;
     manager->earliestKeyTime = earliestKeyTime;
-    manager->averageTxPerBlock = 1400;
+    manager->averageTxPerBlock = 140;
     manager->maxConnectCount = PEER_MAX_CONNECTIONS;
     array_new(manager->peers, peersCount);
     if (peers) array_add_array(manager->peers, peers, peersCount);
@@ -1648,7 +1648,7 @@ BRPeerManager *BRPeerManagerNew(BRWallet *wallet, uint32_t earliestKeyTime, BRMe
         block->target = checkpoint_array[i].target;
         BRSetAdd(manager->checkpoints, block);
         BRSetAdd(manager->blocks, block);
-        if (i == 0 || block->timestamp + 7*24*60*60 < manager->earliestKeyTime) manager->lastBlock = block;
+        if (i == 0 || block->timestamp  < manager->earliestKeyTime) manager->lastBlock = block;
     }
 
     block = NULL;
