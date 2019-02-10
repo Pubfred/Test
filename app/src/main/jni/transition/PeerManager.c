@@ -268,17 +268,17 @@ JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromBlock(J
 
 
 
-/*
+
  * Class:     com_breadwallet_core_BRPeerManager
  * Method:    rescanFromCheckPoint
  * Signature: ()V
 
 JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromCheckPoint(JNIEnv *env, jobject thisObject) {
     if (_peerManager)
-    BRPeerManagerRescanFromLastHardcodedCheckpoint(peerManager);
+    BRPeerManagerRescanFromLastHardcodedCheckpoint(_peerManager);
 }
 
-*/
+
 
 
 JNIEXPORT void JNICALL
