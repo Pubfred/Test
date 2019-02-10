@@ -100,8 +100,8 @@ static const char *dns_seeds[] = {
 // blockchain checkpoints - these are also used as starting points for partial chain downloads, so they need to be at
 // difficulty transition boundaries in order to verify the block difficulty at the immediately following transition
 static const struct { uint32_t height; const char *hash; uint32_t timestamp; uint32_t target; } checkpoint_array[] = {
-      { 0,    "00000c9c83e5970601b5af203855c305a7e426deb667e6a8b3d1e1f66b52d220", 1539864813, 0x1e0ffff0 } // ,
-    //  {50000, "0000000012eafd213b9d5d49e1238c89ca9948012ba9f94453d631592a8f703f", 1543041444, 0x1c166ce9}   1543037844 !!!!
+      { 0,    "00000c9c83e5970601b5af203855c305a7e426deb667e6a8b3d1e1f66b52d220", 1539864813, 0x1e0ffff0 }  ,
+      {50000, "0000000012eafd213b9d5d49e1238c89ca9948012ba9f94453d631592a8f703f", 1543041444, 0x1c166ce9 }  // 1543037844 !!!!
       /*  {300,   "0xf21218cf0f39cbf23113fe7962860b08292b2c59d6f577b85af5a8280e487289", 1524732325, 0x1e0ffff0},
         {600,   "0x6cb9d69493db2deac182c8dcd56fd01a44f5e775365f09bd973a427cf729d491", 1524767448, 0x1e0ffff0},
         {900,   "0x415b1c86d6fef15af7a51dbb5aca8e204ac60454480c1d53b1d14eb034cef0a7", 1524778552, 0x1e0ffff0},
@@ -2062,20 +2062,20 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
 
     int needConnect = 0;
     if (manager->isConnected) {
-        BRMerkleBlock *block = _BRPeerManagerLookupBlockFromBlockNumber(manager, blockNumber);
+        BRMerkleBlock *block = BRPeerManagerLookupBlockFromBlockNumber(manager, blockNumber);
 
         // If there was no block, find the preceeding hardcoded checkpoint.
         if (NULL == block) {
             for (size_t i = manager->params->checkpointsCount; i > 0; i--) {
                 if (i - 1 == 0 || manager->params->checkpoints[i - 1].height < blockNumber) {
-                    UInt256 hash = UInt256Reverse(manager->params->checkpoints[i - 1].hash);
+                    UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
                     block = BRSetGet(manager->blocks, &hash);
                     break;
                 }
             }
         }
 
-        needConnect = _BRPeerManagerRescan(manager, block);
+        needConnect = BRPeerManagerRescan(manager, block);
     }
     pthread_mutex_unlock(&manager->lock);
     if (needConnect) BRPeerManagerConnect(manager);
@@ -2091,8 +2091,8 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
     if (manager->isConnected) {
         size_t i = manager->params->checkpointsCount;
         if (i > 0) {
-            UInt256 hash = UInt256Reverse(manager->params->checkpoints[i - 1].hash);
-            needConnect = _BRPeerManagerRescan(manager, BRSetGet (manager->blocks, &hash));
+            UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
+            needConnect =  BRPeerManagerRescan(manager, BRSetGet (manager->blocks, &hash));
         }
     }
     pthread_mutex_unlock(&manager->lock);
