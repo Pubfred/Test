@@ -2099,32 +2099,7 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
     if (needConnect) BRPeerManagerConnect(manager);
 }
 
-// rescans blocks and transactions after earliestKeyTime (a new random download peer is also selected due to the
-// possibility that a malicious node might lie by omitting transactions that match the bloom filter)
-void BRPeerManagerRescan(BRPeerManager *manager)
-{
-    assert(manager != NULL);
-    pthread_mutex_lock(&manager->lock);
-    
-    int needConnect = 0;
-    if (manager->isConnected) {
-        BRMerkleBlock *newLastBlock = NULL;
 
-        // start the chain download from the most recent checkpoint that's at least a week older than earliestKeyTime
-        for (size_t i = manager->params->checkpointsCount; i > 0; i--) {
-            if (i - 1 == 0 || manager->params->checkpoints[i - 1].timestamp + 7*24*60*60 < manager->earliestKeyTime) {
-                UInt256 hash = UInt256Reverse(manager->params->checkpoints[i - 1].hash);
-
-                newLastBlock = BRSetGet(manager->blocks, &hash);
-                break;
-            }
-        }
-
-        needConnect = _BRPeerManagerRescan(manager, newLastBlock);
-    }
-    pthread_mutex_unlock(&manager->lock);
-    if (needConnect) BRPeerManagerConnect(manager);
-}
 
 
 
