@@ -2057,7 +2057,27 @@ void BRPeerManagerRescan(BRPeerManager *manager)
 }
 
 
-/*
+
+static BRMerkleBlock *_BRPeerManagerLookupBlockFromBlockNumber (BRPeerManager *manager, uint32_t blockNumber)
+{
+    BRMerkleBlock *block = manager->lastBlock;
+
+    // walk the chain, looking for blockNumber
+    while (block) {
+        if (block->height == blockNumber) return block;
+        block = BRSetGet (manager->blocks, &block->prevBlock);
+    }
+
+    // blockNumber not in the (abbreviated) chain - look through checkpoints
+    for (int i = 0; i < CHECKPOINT_COUNT; i++)
+        if (checkpoint_array[i].height == blockNumber) {
+             UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i].hash));
+            return BRSetGet(manager->blocks, &hash);
+        }
+
+    return NULL;
+}
+
 // rescans blocks and transactions from after the blockNumber.  If blockNumber is not known, then
 // rescan from the just prior checkpoint.
 void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNumber)
@@ -2067,12 +2087,12 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
 
     int needConnect = 0;
     if (manager->isConnected) {
-        BRMerkleBlock *block = BRPeerManagerLookupBlockFromBlockNumber(manager, blockNumber);
+        BRMerkleBlock *block = _BRPeerManagerLookupBlockFromBlockNumber(manager, blockNumber);
 
         // If there was no block, find the preceeding hardcoded checkpoint.
         if (NULL == block) {
-            for (size_t i = manager->params->checkpointsCount; i > 0; i--) {
-                if (i - 1 == 0 || manager->params->checkpoints[i - 1].height < blockNumber) {
+            for (size_t i = CHECKPOINT_COUNT; i > 0; i--) {
+                if (i - 1 == 0 || checkpoint_array[i - 1].height < blockNumber) {
                     UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
                     block = BRSetGet(manager->blocks, &hash);
                     break;
@@ -2080,13 +2100,28 @@ void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNu
             }
         }
 
-        needConnect = BRPeerManagerRescan(manager, block);
+        needConnect = _BRPeerManagerRescan(manager, block);
     }
     pthread_mutex_unlock(&manager->lock);
     if (needConnect) BRPeerManagerConnect(manager);
 }
 
-*/
+static int _BRPeerManagerRescan (BRPeerManager *manager, BRMerkleBlock *newLastBlock) {
+    if (NULL == newLastBlock) return 0;
+
+    manager->lastBlock = newLastBlock;
+
+    if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
+        for (size_t i = array_count(manager->peers); i > 0; i--) {
+            if (BRPeerEq(&manager->peers[i - 1], manager->downloadPeer)) array_rm(manager->peers, i - 1);
+        }
+
+        BRPeerDisconnect(manager->downloadPeer);
+    }
+
+    manager->syncStartHeight = 0; // a syncStartHeight of 0 indicates that syncing hasn't started yet
+    return 1;
+}
 
 /*
 void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
