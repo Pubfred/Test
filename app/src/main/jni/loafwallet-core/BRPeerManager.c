@@ -1837,38 +1837,6 @@ void BRPeerManagerDisconnect(BRPeerManager *manager)
     }
 }
 
-// rescans blocks and transactions after earliestKeyTime (a new random download peer is also selected due to the
-// possibility that a malicious node might lie by omitting transactions that match the bloom filter)
-void BRPeerManagerRescan(BRPeerManager *manager)
-{
-    assert(manager != NULL);
-    pthread_mutex_lock(&manager->lock);
-
-    if (manager->isConnected) {
-        // start the chain download from the most recent checkpoint that's at least a week older than earliestKeyTime
-        for (size_t i = CHECKPOINT_COUNT; i > 0; i--) {
-            if (i - 1 == 0 || checkpoint_array[i - 1].timestamp + 7*24*60*60 < manager->earliestKeyTime) {
-                UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
-
-                manager->lastBlock = BRSetGet(manager->blocks, &hash);
-                break;
-            }
-        }
-
-        if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
-            for (size_t i = array_count(manager->peers); i > 0; i--) {
-                if (BRPeerEq(&manager->peers[i - 1], manager->downloadPeer)) array_rm(manager->peers, i - 1);
-            }
-
-            BRPeerDisconnect(manager->downloadPeer);
-        }
-
-        manager->syncStartHeight = 0; // a syncStartHeight of 0 indicates that syncing hasn't started yet
-        pthread_mutex_unlock(&manager->lock);
-        BRPeerManagerConnect(manager);
-    }
-    else pthread_mutex_unlock(&manager->lock);
-}
 
 // the (unverified) best block height reported by connected peers
 uint32_t BRPeerManagerEstimatedBlockHeight(BRPeerManager *manager)
@@ -2053,8 +2021,43 @@ size_t BRPeerManagerRelayCount(BRPeerManager *manager, UInt256 txHash)
     return count;
 }
 
-/*
 
+
+// rescans blocks and transactions after earliestKeyTime (a new random download peer is also selected due to the
+// possibility that a malicious node might lie by omitting transactions that match the bloom filter)
+void BRPeerManagerRescan(BRPeerManager *manager)
+{
+    assert(manager != NULL);
+    pthread_mutex_lock(&manager->lock);
+
+    if (manager->isConnected) {
+        // start the chain download from the most recent checkpoint that's at least a week older than earliestKeyTime
+        for (size_t i = CHECKPOINT_COUNT; i > 0; i--) {
+            if (i - 1 == 0 || checkpoint_array[i - 1].timestamp + 7*24*60*60 < manager->earliestKeyTime) {
+                UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
+
+                manager->lastBlock = BRSetGet(manager->blocks, &hash);
+                break;
+            }
+        }
+
+        if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
+            for (size_t i = array_count(manager->peers); i > 0; i--) {
+                if (BRPeerEq(&manager->peers[i - 1], manager->downloadPeer)) array_rm(manager->peers, i - 1);
+            }
+
+            BRPeerDisconnect(manager->downloadPeer);
+        }
+
+        manager->syncStartHeight = 0; // a syncStartHeight of 0 indicates that syncing hasn't started yet
+        pthread_mutex_unlock(&manager->lock);
+        BRPeerManagerConnect(manager);
+    }
+    else pthread_mutex_unlock(&manager->lock);
+}
+
+
+/*
 // rescans blocks and transactions from after the blockNumber.  If blockNumber is not known, then
 // rescan from the just prior checkpoint.
 void BRPeerManagerRescanFromBlockNumber(BRPeerManager *manager, uint32_t blockNumber)
