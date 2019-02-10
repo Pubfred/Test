@@ -2047,14 +2047,21 @@ void BRPeerManagerRescan(BRPeerManager *manager)
     pthread_mutex_lock(&manager->lock);
 
     if (manager->isConnected) {
-        // start the chain download from the most recent checkpoint that's at least a week older than earliestKeyTime
+        // start the chain download from the most recent checkpoint that's at least a day older than earliestKeyTime
         for (size_t i = CHECKPOINT_COUNT; i > 0; i--) {
-            if (i - 1 == 0 || checkpoint_array[i - 1].timestamp + 7*24*60*60 < manager->earliestKeyTime) {
+            if (i - 1 == 0 ) {
                 UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
 
                 manager->lastBlock = BRSetGet(manager->blocks, &hash);
                 break;
             }
+           if ( checkpoint_array[i - 1].timestamp  < manager->earliestKeyTime) {
+                UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[3].hash));
+
+                manager->lastBlock = BRSetGet(manager->blocks, &hash);
+                break;
+            }    
+                 
         }
 
         if (manager->downloadPeer) { // disconnect the current download peer so a new random one will be selected
