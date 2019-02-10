@@ -642,7 +642,7 @@ public class BRWalletManager {
      * or the first block after the introduction of BIP39 if there is no date stored in the KV store.
      *
      * @param app
-     */
+    
     @Override
     public void rescan(Context app) {
         //the last time the app has done a rescan (not a regular scan)
@@ -669,6 +669,7 @@ public class BRWalletManager {
             }
         }
     }
+    */
     
     
      /**
@@ -676,7 +677,7 @@ public class BRWalletManager {
      *
      * @param app  android context to use
      * @param mode the RescanMode to be used
-     */
+     
     private void rescan(Context app, RescanMode mode) {
         if (RescanMode.FROM_BLOCK == mode) {
             long lastSentTransactionBlockheight = BRSharedPrefs.getLastSendTransactionBlockheight(app, getIso());
@@ -695,7 +696,7 @@ public class BRWalletManager {
         BRSharedPrefs.putLastRescanModeUsed(app, getIso(), mode.name());
         BRSharedPrefs.putLastRescanTime(app, getIso(), now);
     }
-
+*/
     
      /**
      * @param mode       the RescanMode enum to compare to
