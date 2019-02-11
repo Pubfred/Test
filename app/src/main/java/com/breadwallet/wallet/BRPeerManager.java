@@ -391,7 +391,7 @@ public class BRPeerManager {
     public native long getLastBlockTimestamp();
 
     public native void rescan();
-    public native void rescanFromBlock(long blockNumber);
+    public native void rescanFromBlock(int blockNumber);
     public native void rescanFromCheckPoint();
     
     
