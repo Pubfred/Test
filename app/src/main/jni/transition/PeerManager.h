@@ -50,7 +50,7 @@ JNIEXPORT void JNICALL
 Java_com_breadwallet_wallet_BRPeerManager_rescanFromBlock(JNIEnv *env, jobject thiz, int blockNumber);
   
  /*
- * Class:     com_breadwallet_core_BRCorePeerManager
+ * Class:     com_breadwallet_wallet_BRCorePeerManager
  * Method:    rescanFromCheckPoint
  * Signature: ()V
  */
