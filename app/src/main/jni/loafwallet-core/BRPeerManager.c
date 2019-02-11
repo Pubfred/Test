@@ -2055,7 +2055,7 @@ void BRPeerManagerRescan(BRPeerManager *manager)
                 manager->lastBlock = BRSetGet(manager->blocks, &hash);
                 break;
             }
-           if ( checkpoint_array[i - 1].timestamp  < manager->earliestKeyTime) {
+           if ( checkpoint_array[i - 1].timestamp + 1*24*60*60 < manager->earliestKeyTime) {
                 UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
 
                 manager->lastBlock = BRSetGet(manager->blocks, &hash);
