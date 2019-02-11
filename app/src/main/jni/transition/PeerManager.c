@@ -255,11 +255,11 @@ JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_rescan(JNIEnv *
 }
 
 /*
- * Class:     com_breadwallet_core_BRPeerManager
+ * Class:     com_breadwallet_wallet_BRPeerManager
  * Method:    rescanFromBlock
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromBlock(JNIEnv *env, jobject thiz, int blockNumber) {
+JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_rescanFromBlock(JNIEnv *env, jobject thiz, int blockNumber) {
     // BRPeerManager *_peerManager = (BRPeerManager *) getJNIReference(env, thiz);
     if (_peerManager)
     BRPeerManagerRescanFromBlockNumber(_peerManager, (uint32_t) blockNumber);
@@ -269,11 +269,11 @@ JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromBlock(J
 
 
 /*
- * Class:     com_breadwallet_core_BRPeerManager
+ * Class:     com_breadwallet_wallet_BRPeerManager
  * Method:    rescanFromCheckPoint
  * Signature: ()V
 */
-JNIEXPORT void JNICALL Java_com_breadwallet_core_BRPeerManager_rescanFromCheckPoint(JNIEnv *env, jobject thiz) {
+JNIEXPORT void JNICALL Java_com_breadwallet_wallet_BRPeerManager_rescanFromCheckPoint(JNIEnv *env, jobject thiz) {
    // BRPeerManager *_peerManager = (BRPeerManager *) getJNIReference(env, thiz);
     if (_peerManager)
     BRPeerManagerRescanFromLastHardcodedCheckpoint(_peerManager);
