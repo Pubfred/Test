@@ -1648,7 +1648,7 @@ BRPeerManager *BRPeerManagerNew(BRWallet *wallet, uint32_t earliestKeyTime, BRMe
         block->target = checkpoint_array[i].target;
         BRSetAdd(manager->checkpoints, block);
         BRSetAdd(manager->blocks, block);
-        if (i == 0 || block->timestamp + 1*24*60*60  < manager->earliestKeyTime) manager->lastBlock = block;
+        if (i == 0 || block->timestamp + 7*24*60*60  < manager->earliestKeyTime) manager->lastBlock = block;
     }
 
     block = NULL;
@@ -2055,7 +2055,7 @@ void BRPeerManagerRescan(BRPeerManager *manager)
                 manager->lastBlock = BRSetGet(manager->blocks, &hash);
                 break;
             }
-           if ( checkpoint_array[i - 1].timestamp + 1*24*60*60 < manager->earliestKeyTime) {
+           if ( checkpoint_array[i - 1].timestamp + 7*24*60*60 < manager->earliestKeyTime) {
                 UInt256 hash = UInt256Reverse(u256_hex_decode(checkpoint_array[i - 1].hash));
 
                 manager->lastBlock = BRSetGet(manager->blocks, &hash);
