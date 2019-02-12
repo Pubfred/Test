@@ -295,7 +295,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         } else {
           		
 	  if ( level < 3  )
-          convertView.status.setText(String.format(""));
+          convertView.status.setText(String.format(item.getTxHash()));
 	  if (level > 2 )
           convertView.status.setText(String.format("%s - %s",sentReceived, percentage));
 	  
