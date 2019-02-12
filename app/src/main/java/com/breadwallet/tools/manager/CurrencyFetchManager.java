@@ -197,7 +197,7 @@ public class CurrencyFetchManager {
 
 
     public static JSONObject getJSonArray(Activity activity) {
-        String jsonString = callURL(activity, "https://api.coingecko.com/api/v3/simple/price?ids=zeon-2&vs_currencies=btc,EUR");
+        String jsonString = callURL(activity, "https://api.coingecko.com/api/v3/simple/price?ids=zeon-2&vs_currencies=EUR");
         JSONObject jsonArray = null;
         if (jsonString == null) return null;
         try {
