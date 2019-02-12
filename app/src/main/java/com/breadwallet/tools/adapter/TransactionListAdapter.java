@@ -223,19 +223,9 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         
         convertView.arrowIcon.setImageResource(received ? R.drawable.arrow_down_bold_circle : R.drawable.arrow_up_bold_circle);
         convertView.mainLayout.setBackgroundResource(getResourceByPos(position));
-
-//	if (item.isValid())
-        //convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
-
-//        if (item.isValid())
-         // convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
-        
-        
+       
     
 	final String addr = item.getTo()[0];
-
-//	if (item.isValid())
-        //convertView.account.setText(addr);
 
 	int blockHeight = item.getBlockHeight();
         int confirms = blockHeight == Integer.MAX_VALUE ? 0 : BRSharedPrefs.getLastBlockHeight(mContext) - blockHeight + 1;
@@ -301,9 +291,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (level == 6) {
 	    	
             convertView.status.setText(mContext.getString(R.string.Transaction_complete));
-            // BRPeerManager.getInstance().syncStarted() ;   
-            //convertView.status.setText(String.format("To be deleted"));		    
-            //convertView.constraintLayout.removeView(convertView.status);
+            
         } else {
           		
 	  if ( level < 3  )
@@ -311,27 +299,22 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	  if (level > 2 )
           convertView.status.setText(String.format("%s - %s",sentReceived, percentage));
 	  
-
-
         }
 
          
             
         convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
-//        
+      
         convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
 
         
         convertView.account.setText(addr);
-
-
-        // convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
+     
              
-        // if (!item.isValid())
-        //        {
-          //       convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
-               // PeerManager.getInstance().txStatusUpdate() ;
-        // }
+        if (!item.isValid())
+                {
+                 convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
+        }
 
 
         long satoshisAmount = received ? item.getReceived() : (item.getSent() - item.getReceived());
@@ -339,7 +322,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         boolean isBTCPreferred = BRSharedPrefs.getPreferredBTC(mContext);
         String iso = isBTCPreferred ? "ZEON" : BRSharedPrefs.getIso(mContext);
 
-//	if (item.isValid())
+
   
   
         convertView.amount.setText(BRCurrency.getFormattedCurrencyString(mContext, iso, BRExchange.getAmountFromSatoshis(mContext, iso, new BigDecimal(satoshisAmount))));
@@ -347,8 +330,6 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         //if it's 0 we use the current time.
         long timeStamp = item.getTimeStamp() == 0 ? System.currentTimeMillis() : item.getTimeStamp() * 1000;
         CharSequence timeSpan = BRDateUtil.getCustomSpan(new Date(timeStamp));
-
-//	if (item.isValid())
         convertView.timestamp.setText(timeSpan);
 
     
