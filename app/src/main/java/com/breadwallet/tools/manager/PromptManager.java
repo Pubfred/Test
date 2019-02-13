@@ -148,10 +148,9 @@ public class PromptManager {
 				//int startHeight = BRSharedPrefs.getStartHeight(app);
                                 //int lastHeight = BRSharedPrefs.getLastBlockHeight(app);
                                 //if (startHeight > lastHeight)    
-				//BRSharedPrefs.putStartHeight(app,lastHeight);
-                                BRPeerManager.getInstance().rescanFromCheckPoint();
-				    
-                                BRSharedPrefs.putScanRecommended(app, false);
+				BRSharedPrefs.putStartHeight(app,100000);
+                                BRPeerManager.getInstance().rescanFromBlock(100000);
+				BRSharedPrefs.putScanRecommended(app, false);
                             }
                         }).start();
                     }
