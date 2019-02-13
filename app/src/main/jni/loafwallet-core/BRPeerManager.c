@@ -2034,7 +2034,7 @@ static int _BRPeerManagerRescan (BRPeerManager *manager, BRMerkleBlock *newLastB
         BRPeerDisconnect(manager->downloadPeer);
     }
 
-    manager->syncStartHeight = 0 ;  // manager->lastBlock->height ;// a syncStartHeight of 0 indicates that syncing hasn't started yet
+    manager->syncStartHeight = manager->lastBlock->height ;   //0 ;a syncStartHeight of 0 indicates that syncing hasn't started yet
     return 1;
 }
 
@@ -2072,7 +2072,7 @@ void BRPeerManagerRescan(BRPeerManager *manager)
             BRPeerDisconnect(manager->downloadPeer);
         }
 
-        manager->syncStartHeight = 0; //manager->lastBlock->height; // a syncStartHeight of 0 indicates that syncing hasn't started yet
+        manager->syncStartHeight =  manager->lastBlock->height;  //manager->lastBlock->height;   // 0; a syncStartHeight of 0 indicates that syncing hasn't started yet
         pthread_mutex_unlock(&manager->lock);
         BRPeerManagerConnect(manager);
     }
@@ -2152,7 +2152,7 @@ void BRPeerManagerRescanFromLastHardcodedCheckpoint(BRPeerManager *manager)
         }
 
     }            
-    manager->syncStartHeight = 0;  // manager->lastBlock->height;   
+    manager->syncStartHeight =  manager->lastBlock->height;   //  0;
     pthread_mutex_unlock(&manager->lock);
     BRPeerManagerConnect(manager);
          
