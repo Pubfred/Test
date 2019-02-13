@@ -145,10 +145,10 @@ public class PromptManager {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-				int startHeight = BRSharedPrefs.getStartHeight(app);
-                                int lastHeight = BRSharedPrefs.getLastBlockHeight(app);
-                                if (startHeight > lastHeight)    
-				BRSharedPrefs.putStartHeight(app,lastHeight);
+				//int startHeight = BRSharedPrefs.getStartHeight(app);
+                                //int lastHeight = BRSharedPrefs.getLastBlockHeight(app);
+                                //if (startHeight > lastHeight)    
+				//BRSharedPrefs.putStartHeight(app,lastHeight);
                                 BRPeerManager.getInstance().rescanFromCheckPoint();
 				    
                                 BRSharedPrefs.putScanRecommended(app, false);
