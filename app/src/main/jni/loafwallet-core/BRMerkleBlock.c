@@ -123,19 +123,8 @@ BRMerkleBlock *BRMerkleBlockParse(const uint8_t *buf, size_t bufLen)
             if (block->flags) memcpy(block->flags, &buf[off], len);
         }
 
-        //keccak
-        if(block->timestamp<=1533567600)
-        {
-            BRKeccak256(&block->blockHash, buf, 80);
-        }
-        //hexalgo
-        else
-        {
-            BRHexAlgo(&block->blockHash, buf);
-        }
-
-
-
+             
+        BRHexAlgo(&block->blockHash, buf);
         //BRSHA256_2(&block->blockHash, buf, 80);
         BRScrypt(&block->powHash, sizeof(block->powHash), buf, 80, buf, 80, 1024, 1, 1);
     }
