@@ -145,8 +145,8 @@ public class PromptManager {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-				BRSharedPrefs.putStartHeight(app,0);
-                                BRPeerManager.getInstance().rescanFromBlock(100000);
+				BRSharedPrefs.putStartHeight(app,150000);
+                                BRPeerManager.getInstance().rescanFromBlock(150005);
                                 BRSharedPrefs.putScanRecommended(app, false);
                             }
                         }).start();
