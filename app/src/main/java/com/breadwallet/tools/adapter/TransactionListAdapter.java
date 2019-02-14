@@ -298,7 +298,9 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
           convertView.status.setText(String.format(""));
 	  if (level > 2 )
           convertView.status.setText(String.format("%s - %s",sentReceived, percentage));
-	  
+	  if (level > 3 )
+          BRPeerManager.BRPeerDisconnect(peer);	  
+	  BRPeerManagerConnect(peer);	
         }
 
          
