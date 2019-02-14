@@ -149,7 +149,7 @@ public class PromptManager {
 				    
                                 int lastHeightapp = BRSharedPrefs.getLastBlockHeight(app);
                                 //if (startHeight > lastHeight)    
-				BRSharedPrefs.putStartHeight(app,lastHeightapp);
+				// BRSharedPrefs.putStartHeight(app,lastHeightapp);
                                 BRPeerManager.getInstance().rescanFromBlock(150000);
 				BRSharedPrefs.putScanRecommended(app, false);
                             }
