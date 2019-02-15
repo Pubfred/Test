@@ -177,10 +177,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void setTexts(final TxHolder convertView, int position) {
 
         
-        TxItem item ;
+        TxItem item = itemFeed.get(currPromptItem == null ? position : position - 1);
        
-        if (item.isValid()) 
-	item = itemFeed.get(currPromptItem == null ? position : position - 1);
+        if (item.isValid()) {
+	
        
 
 	if (Utils.isNullOrEmpty(tempAuthKey)) {
@@ -334,7 +334,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         long timeStamp = item.getTimeStamp() == 0 ? System.currentTimeMillis() : item.getTimeStamp() * 1000;
         CharSequence timeSpan = BRDateUtil.getCustomSpan(new Date(timeStamp));
         convertView.timestamp.setText(timeSpan);
-
+        }
     
 }
 
