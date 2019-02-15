@@ -176,10 +176,12 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void setTexts(final TxHolder convertView, int position) {
 
-           
-        TxItem item = itemFeed.get(currPromptItem == null ? position : position - 1);
-       
         
+        TxItem item ;
+       
+        if (item.isValid()) 
+	item = itemFeed.get(currPromptItem == null ? position : position - 1);
+       
 
 	if (Utils.isNullOrEmpty(tempAuthKey)) {
             tempAuthKey = BRKeyStore.getAuthKey(mContext);
@@ -298,9 +300,8 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
           convertView.status.setText(String.format(""));
 	  if (level > 2 )
           convertView.status.setText(String.format("%s - %s",sentReceived, percentage));
-	  if (level > 3 )
-          BRPeerManager.BRPeerDisconnect(peer);	  
-	  BRPeerManagerConnect(peer);	
+	 
+          	
         }
 
          
