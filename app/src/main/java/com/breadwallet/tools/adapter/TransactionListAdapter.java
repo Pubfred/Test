@@ -179,7 +179,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         
         TxItem item = itemFeed.get(currPromptItem == null ? position : position - 1);
        
-        if (item.isValid()) {
+        
 	
        
 
@@ -305,17 +305,18 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
          
-            
+           
         convertView.sentReceived.setText(received ? mContext.getString(R.string.TransactionDetails_received, "") : mContext.getString(R.string.TransactionDetails_sent, ""));
       
+	if (item.isValid()) {     
         convertView.toFrom.setText(received ? String.format(mContext.getString(R.string.TransactionDetails_from), "") : String.format(mContext.getString(R.string.TransactionDetails_to), ""));
-
-        
+ 
         convertView.account.setText(addr);
-     
+        }
              
-        if (!item.isValid())
-                {
+	    
+        if (!item.isValid()) {
+                
                  convertView.status.setText(mContext.getString(R.string.Transaction_invalid));
         }
 
@@ -334,7 +335,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         long timeStamp = item.getTimeStamp() == 0 ? System.currentTimeMillis() : item.getTimeStamp() * 1000;
         CharSequence timeSpan = BRDateUtil.getCustomSpan(new Date(timeStamp));
         convertView.timestamp.setText(timeSpan);
-        }
+       
     
 }
 
