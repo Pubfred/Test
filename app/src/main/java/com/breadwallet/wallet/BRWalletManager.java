@@ -455,7 +455,7 @@ public class BRWalletManager {
     public static void onTxDeleted(String hash, int notifyUser, final int recommendRescan) {
         Log.e(TAG, "onTxDeleted: " + String.format("hash: %s, notifyUser: %d, recommendRescan: %d", hash, notifyUser, recommendRescan));
         final Context ctx = BreadApp.getInstance();
-        BRSharedPrefs.putScanRecommended(ctx, false);
+        BRSharedPrefs.putScanRecommended(ctx, true);
     }
 
     public boolean validatePhrase(Context ctx, String phrase) {
