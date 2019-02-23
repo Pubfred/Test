@@ -64,7 +64,7 @@ public class SyncBlockchainActivity extends BRActivity {
                                         int startHeight = BRSharedPrefs.getStartHeight(SyncBlockchainActivity.this);
                                      //   int lastHeightSync = BRSharedPrefs.getLastBlockHeight(SyncBlockchainActivity.this);
                                      //   if (startHeight > lastHeight)
-                                        BRSharedPrefs.putStartHeight(SyncBlockchainActivity.this, startHeight);
+                                        BRSharedPrefs.putStartHeight(SyncBlockchainActivity.this, getCurrentBlockHeight());
                                         BRPeerManager.getInstance().rescanFromCheckPoint();
                                         BRAnimator.startBreadActivity(SyncBlockchainActivity.this, false);
 
