@@ -1,8 +1,8 @@
 ## ZEON mobile wallet for Android
 ------
 
-[<img src="https://github.com/ZEON-Core/ZEON-android/raw/master/images/icon-google-play.png">](
-https://play.google.com/store/apps/details?id=org.ZEON)
+
+
 
 ### A completely standalone ZEON wallet
 
